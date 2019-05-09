@@ -5,7 +5,6 @@ is_sudo="$(./require-sudo --soft)"
 if [[ $is_sudo == "Success!" ]];then
 
     sudo apt-key add exported-keys
-    mkdir ~/dev/
     sudo mkdir /etc/skel/dev
 
     sa="$(cat sources.list)
@@ -23,11 +22,19 @@ $(cat /etc/apt/sources.list)"
 
     sudo xargs -a apt-packages apt install -y
     sudo apt install linux-headers-$(uname -r) -y
-    mkdir ~/.local/share/umake/web/firefox-dev/
-    umake web firefox-dev --lang en-US ~/.local/share/umake/web/firefox-dev/
 
     sudo apt update && sudo apt upgrade -y
     
+    mkdir ~/.local/share/umake/web/firefox-dev/
+    umake web firefox-dev --lang en-US ~/.local/share/umake/web/firefox-dev/
+    git config --global credential.helper store
+
+    cd ~/
+    git clone "https://github.com/Zanzes/org.git" org
+
+    mkdir ~/dev/
+    cd ~/dev/
+    git clone "https://github.com/Zanzes/lztools.git" lztools
     
 else
     echo "Error: This script requires sudo access";
