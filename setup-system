@@ -1,0 +1,31 @@
+#!/bin/bash
+
+is_sudo="$(./require-sudo --soft)"
+
+if [[ $is_sudo == "Success!" ]];then
+
+    sudo apt-key add exported-keys
+
+    sa="$(cat sources.list)
+$(cat /etc/apt/sources.list)"
+    sources="$(echo $sa | sort | uniq)"
+    echo "$sources" > sources.new
+    sudo mv --force sources.new /etc/apt/sources.list
+
+    sa="$(cat sources.list.d/*)"
+    sources="$(echo $sa | sort | uniq)"
+    echo "$sources" > sources.new
+    sudo mv --force sources.new /etc/apt/sources.list.d/extras.list
+
+    sudo apt update && sudo apt upgrade -y
+
+    sudo xargs -a apt-packages apt install -y
+    sudo apt install linux-headers-$(uname -r) -y
+    umake web firefox-dev --lang en-US ~/.local/share/umake/web/firefox-dev/
+
+    sudo apt update && sudo apt upgrade -y
+    
+else
+    echo "Error: This script requires sudo access";
+fi
+

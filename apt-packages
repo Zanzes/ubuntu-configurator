@@ -1,0 +1,7 @@
+ubuntu-make
+xinit
+i3
+software-properties-common
+ubuntu-drivers-common
+net-tools
+git

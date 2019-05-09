@@ -1,0 +1,14 @@
+#!/bin/bash
+
+is_sudo="$(./require-sudo --soft)"
+
+if [[ $is_sudo == "Success!" ]];then
+
+    sudo apt-key exportall > exported-keys
+    sudo cp /etc/apt/sources.list sources.list
+    sudo cp -r /etc/apt/sources.list.d/ sources.list.d
+    
+else
+    echo "Error: This script requires sudo access";
+fi
+
