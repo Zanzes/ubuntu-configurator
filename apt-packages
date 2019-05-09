@@ -5,3 +5,4 @@ software-properties-common
 ubuntu-drivers-common
 net-tools
 git
+emacs
