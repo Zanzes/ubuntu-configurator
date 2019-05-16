@@ -14,7 +14,7 @@ $(cat /etc/apt/sources.list)"
     sudo mv --force sources.new /etc/apt/sources.list
 
     sa="$(cat sources.list.d/*)"
-    sources="$(echo $sa | sort | uniq)"
+    sources="$(echo \"$sa\" | sort | uniq)"
     echo "$sources" > sources.new
     sudo mv --force sources.new /etc/apt/sources.list.d/extras.list
 
